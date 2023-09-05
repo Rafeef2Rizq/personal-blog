@@ -24,8 +24,8 @@ class DatabaseSeeder extends Seeder
         //Category::factory()->count(50)->create();
         // Article::factory()->count(
         //     10)->create();
-            Tag::factory()->count(
-                30)->create();
+           // Tag::factory()->count(
+               // 30)->create();
 
     }
 }

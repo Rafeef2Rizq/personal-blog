@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Article;
 use App\Http\Requests\StoreArticleRequest;
 use App\Http\Requests\UpdateArticleRequest;
+use App\Models\Category;
 use App\Models\Tag;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -49,6 +50,7 @@ class ArticleController extends Controller
         'views'=>$request->views,
         'category_id'=>$request->category_id
        ]);
+      
        return to_route('articles.index')->with('success','Atricle Created !');
     }
 
@@ -100,7 +102,14 @@ class ArticleController extends Controller
      */
     public function destroy(Article $article)
     {
+        $articleImage=$article->image;
         $article->delete();
+
+        if($articleImage &&Storage::disk('public')->exists($articleImage)){
+            Storage::disk('public')->delete($articleImage);
+        }
         return to_route('articles.index')->with('success','Article Deleted !');
     }
+
+    
 }

@@ -106,7 +106,11 @@ class CategoryController extends Controller
      */
     public function destroy(Category $category)
     {
+        $imagePa=$category->image;
        $category->delete();
+       if($imagePa && Storage::disk('public')->exists($imagePa)){
+           Storage::disk('public')->delete($imagePa);
+       }
        return redirect()->route('dashboard.categories.index')->with('success', 'Category Deleted !');
 
     }

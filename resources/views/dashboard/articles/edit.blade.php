@@ -4,6 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit article</title>
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
+ <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -62,7 +64,7 @@
   </label>
   <label class="block text-sm">
   <span class="text-gray-700 dark:text-gray-400">Tags</span>
-  <input type="text" name="tags"  value="{{$tags}}"
+  <input type="text" name="tags"  value="{!!$tags !!}"
     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
     placeholder="tags"
   />
@@ -85,7 +87,10 @@
         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
          name="category_id"
       >
+      <option value="" >No category</option>
+
       @foreach (App\Models\Category::all() as $category)
+
       <option value="{{$category->id}}" @selected($category->id == $article->category_id)>{{$category->name}}</option>
 
       @endforeach
@@ -159,8 +164,7 @@
   
   </div>
  </main>
- <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
- <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+ 
 <script>
 // The DOM element you wish to replace with Tagify
 var input = document.querySelector('input[name=tags]');

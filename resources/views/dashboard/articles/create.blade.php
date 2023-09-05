@@ -3,7 +3,8 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Tables - Windmill Dashboard</title>
+    <title>Create article</title>
+    <link rel="stylesheet" href="{{asset('/amsify/amsify.suggestags.css')}}">
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -13,9 +14,10 @@
       src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js"
       defer
     ></script>
+   
+
     <script src="{{asset('./assets/js/init-alpine.js')}}"></script>
-    
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
+
   </head>
   <body>
  {{-- side Bar --}}
@@ -61,7 +63,7 @@
     </label>
       <label class="block text-sm">
       <span class="text-gray-700 dark:text-gray-400">Tags</span>
-      <input type="text" name="tags"  value="'tag1, tag2' autofocus"
+      <input type="text" name="tags"  
         class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
         placeholder="tags"
       />
@@ -75,8 +77,10 @@
         class="block w-full mt-1 text-sm dark:text-gray-300 dark:border-gray-600 dark:bg-gray-700 form-multiselect focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray"
          name="category_id"
       >
-      @foreach (App\Models\Article::all() as $article)
-      <option value="{{$article->category->id}}">{{$article->category->name}}</option>
+      <option value="" >No category</option>
+
+      @foreach (App\Models\Category::all() as $category)
+      <option value="{{$category->id}}" >{{$category->name}}</option>
 
       @endforeach
        
@@ -152,14 +156,10 @@
   
   </div>
  </main>
- <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{asset('./amsify/jquery.amsify.suggestags.js')}}"></script>
  <script>
-  // The DOM element you wish to replace with Tagify
-var input = document.querySelector('input[name=tags]');
-var tagify = new Tagify(input, {
-  originalInputValueFormat: valuesArr => valuesArr.map(item => item.value).join(',')
-})
+ $('input[name="tags"]').amsifySuggestags();
 
  </script>
   </body>

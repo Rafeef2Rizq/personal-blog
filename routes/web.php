@@ -3,6 +3,7 @@
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\dashboardController;
+use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\TagController;
 use Illuminate\Support\Facades\Route;
@@ -45,3 +46,5 @@ Route::post('/dashboard/categories/{category}/update',[CategoryController::class
 Route::resource('/dashboard/articles',ArticleController::class);
 Route::resource('/dashboard/tags',TagController::class);
 
+Route::get('/frontend/main',[HomePageController::class,'index'])->name('frontend.mainPage');
+Route::get('/articles/category/{category}', [HomePageController::class,'showArticlesByCategory'])->name('articles.showArticlesByCategory');

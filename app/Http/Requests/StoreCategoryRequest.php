@@ -23,8 +23,8 @@ class StoreCategoryRequest extends FormRequest
     {
         return [
             'name' => ['required', 'min:3', 'max:30'],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], 
-            'description' => ['nullable', 'string', 'max:255'], 
+            'image' => ['image', 'max:2048'], 
+            'description' => ['nullable', 'string'], 
         ];
     }
 }
