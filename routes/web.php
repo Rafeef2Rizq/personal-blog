@@ -47,4 +47,6 @@ Route::resource('/dashboard/articles',ArticleController::class);
 Route::resource('/dashboard/tags',TagController::class);
 
 Route::get('/frontend/main',[HomePageController::class,'index'])->name('frontend.mainPage');
+Route::get('/frontend/aboutAs',[HomePageController::class,'viewAbout'])->name('frontend.aboutAs');
+
 Route::get('/articles/category/{category}', [HomePageController::class,'showArticlesByCategory'])->name('articles.showArticlesByCategory');

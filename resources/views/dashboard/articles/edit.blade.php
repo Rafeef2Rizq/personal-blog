@@ -4,8 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Edit article</title>
-    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify"></script>
- <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.polyfills.min.js"></script>
+    <link rel="stylesheet" href="{{asset('/amsify/amsify.suggestags.css')}}">
+
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
       rel="stylesheet"
@@ -16,7 +16,6 @@
       defer
     ></script>
     <script src="{{asset('./assets/js/init-alpine.js')}}"></script>
-    <link href="https://cdn.jsdelivr.net/npm/@yaireo/tagify/dist/tagify.css" rel="stylesheet" type="text/css" />
 
   </head>
   <body>
@@ -64,7 +63,7 @@
   </label>
   <label class="block text-sm">
   <span class="text-gray-700 dark:text-gray-400">Tags</span>
-  <input type="text" name="tags"  value="{!!$tags !!}"
+  <input type="text" name="tags"  value="{{ $tags }}"
     class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
     placeholder="tags"
   />
@@ -165,12 +164,11 @@
   </div>
  </main>
  
-<script>
-// The DOM element you wish to replace with Tagify
-var input = document.querySelector('input[name=tags]');
+ <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{{asset('./amsify/jquery.amsify.suggestags.js')}}"></script>
+ <script>
+ $('input[name="tags"]').amsifySuggestags();
 
-// initialize Tagify on the above input node reference
-new Tagify(input)
-</script>
+ </script>
   </body>
 </html>

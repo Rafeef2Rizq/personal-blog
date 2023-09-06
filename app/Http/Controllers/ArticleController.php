@@ -76,26 +76,61 @@ class ArticleController extends Controller
      * Update the specified resource in storage.
      */
     public function update(UpdateArticleRequest $request, Article $article)
-    {
-        $article->update($request->except('tags'));
-        $tags=json_decode($request->post('tags'));
-        // dd($tags);
-        $saved_tags=Tag::all();
-        $tag_ids=[];
-        foreach($tags as $tag_name){
-          $slug=STR::slug($tag_name->value);
-          $tag=$saved_tags->where('slug','=',$slug)->first();
-          if(!$tag){
-           $tag=Tag::create([
-             'name'=>$tag_name->value,
-             'slug'=>$slug
+{
+    $imagePath="";
+    if($request->hasFile('image')){
+     $imageOb=$request->file('image');
+     $imagePath=$imageOb->store('uploads','public');
+    
+     if ($article->image) {
+        Storage::disk('public')->delete($article->image);
+       }
+    $article->update([
+        'title'=>$request->title,
+        'slug'=>Str::slug($request->title),
+        'content'=>$request->content,
+        'excerpt'=>$request->excerpt,
+        'image'=>$imagePath,
+        'status'=>$request->status,
+        'views'=>$request->views,
+        'category_id'=>$request->category_id
+       ]);
+      
+    }else{
+        $article->update([
+            'title'=>$request->title,
+            'slug'=>Str::slug($request->title),
+            'content'=>$request->content,
+            'excerpt'=>$request->excerpt,
+            'status'=>$request->status,
+            'views'=>$request->views,
+            'category_id'=>$request->category_id
            ]);
-          }
-         $tag_ids[]=$tag->id;
-        }
-        $article->tags()->sync($tag_ids);
-            return redirect()->route('articles.index')->with('success', 'article updated !');
     }
+    
+    $tags= explode(',', $request->post('tags'));
+    $saved_tags = Tag::all();
+    $tag_ids = [];
+
+    foreach ($tags as $tag_name) {
+        $slug = Str::slug($tag_name);
+        $tag = $saved_tags->where('slug', $slug)->first();
+
+        if (!$tag) {
+            $tag = Tag::create([
+                'name' => $tag_name,
+                'slug' => $slug,
+            ]);
+        }
+
+        $tag_ids[] = $tag->id;
+    }
+
+    $article->tags()->sync($tag_ids);
+
+    return redirect()->route('articles.index')->with('success', 'Article updated!');
+}
+
 
     /**
      * Remove the specified resource from storage.

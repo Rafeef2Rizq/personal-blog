@@ -25,8 +25,8 @@ class StoreArticleRequest extends FormRequest
         return [
             'title' => ['required', 'min:3', 'max:30'],
             'excerpt' => ['required', 'max:100'],
-            'image' => ['image', 'mimes:jpeg,png,jpg,gif', 'max:2048'], 
-            'content' => ['nullable', 'string', 'max:255'], 
+            'image' => ['image', 'max:2048'], 
+            'content' => ['nullable', 'string'] ,
             'status'=>[Rule::in(['draft','published','scheduled']),]
         ];
     }
