@@ -72,7 +72,7 @@
     <x-footer/>
 
     <!-- AlpineJS for the image carousel -->
-    <x-sidebar/>
+ 
 
 
 </body>

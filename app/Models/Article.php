@@ -16,6 +16,6 @@ public function category(){
 
 
 public function tags(){
-    return $this->belongsToMany(Tag::class,'article_tag');
+    return $this->belongsToMany(Tag::class);
 }
 }

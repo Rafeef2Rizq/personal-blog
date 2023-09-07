@@ -23,9 +23,15 @@ class HomePageController extends Controller
     }
 
 
-public function viewAbout(){
-    return view('frontend.about');
-}
+        public function viewAbout(){
+            return view('frontend.about');
+        }
+        public function showArticle(Article $article){
+            $previousPost = Article::where('id', '<', $article->id)->orderBy('id', 'desc')->first();
+            $nextPost = Article::where('id', '>', $article->id)->orderBy('id')->first();
+
+            return view('frontend.article',compact('article','previousPost','nextPost'));
+        }
 
 
 
