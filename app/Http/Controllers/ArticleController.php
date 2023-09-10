@@ -48,7 +48,8 @@ class ArticleController extends Controller
         'image'=>$imagePath,
         'status'=>$request->status,
         'views'=>$request->views,
-        'category_id'=>$request->category_id
+        'category_id'=>$request->category_id,
+        'user_id'=>auth()->id()
        ]);
       
        return to_route('articles.index')->with('success','Atricle Created !');
@@ -93,7 +94,8 @@ class ArticleController extends Controller
         'image'=>$imagePath,
         'status'=>$request->status,
         'views'=>$request->views,
-        'category_id'=>$request->category_id
+        'category_id'=>$request->category_id,
+        'user_id'=>auth()->id()
        ]);
       
     }else{
@@ -104,7 +106,8 @@ class ArticleController extends Controller
             'excerpt'=>$request->excerpt,
             'status'=>$request->status,
             'views'=>$request->views,
-            'category_id'=>$request->category_id
+            'category_id'=>$request->category_id,
+            'user_id'=>auth()->id()
            ]);
     }
     

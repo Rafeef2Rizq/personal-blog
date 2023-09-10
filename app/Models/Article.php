@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Article extends Model
 {
     use HasFactory;
-    protected $fillable=['title','slug','content','image','views','category_id','status'
+    protected $fillable=['title','slug','content','image','views','category_id','status','user_id'
 ,'excerpt'];
 public function category(){
     return $this->belongsTo(Category::class,'category_id','id');
@@ -17,5 +17,8 @@ public function category(){
 
 public function tags(){
     return $this->belongsToMany(Tag::class);
+}
+public function user(){
+    return $this->belongsTo(User::class,'user_id'); 
 }
 }

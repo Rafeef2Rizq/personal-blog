@@ -51,7 +51,7 @@
                 <a href="#" class="text-3xl font-bold hover:text-gray-700 pb-4">{{$article->title}}</a>
                 <p href="#" class="text-sm pb-3">
                     By <a href="#" class="font-semibold hover:text-gray-800">
-                        {{ Auth::user()->name ??" " }}</a>,
+                        {{ $article->user->name  ??" " }}</a>,
                          Published on {{ \Carbon\Carbon::parse($article->created_at)->isoFormat('MMMM Do, YYYY') }}
 
                 </p>

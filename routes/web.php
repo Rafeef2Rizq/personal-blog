@@ -19,10 +19,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
+Route::get('/', [HomePageController::class,'index'])->name('frontend.mainPage');
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -36,17 +33,27 @@ Route::middleware('auth')->group(function () {
 require __DIR__.'/auth.php';
 
 Route::get('/dashboard',[dashboardController::class,'index'])->name('dashboard');
-Route::get('/dashboard/categories',[CategoryController::class,'index'])->name('dashboard.categories.index');
-Route::get('/dashboard/categories/create',[CategoryController::class,'create'])->name('dashboard.categories.create');
-Route::post('/dashboard/categories',[CategoryController::class,'store'])->name('dashboard.categories.store');
-Route::post('/dashboard/categories/{category}',[CategoryController::class,'destroy'])->name('dashboard.categories.destroy');
-Route::get('/dashboard/categories/{category}/edit',[CategoryController::class,'edit'])->name('dashboard.categories.edit');
-Route::post('/dashboard/categories/{category}/update',[CategoryController::class,'update'])->name('dashboard.categories.update');
 
-Route::resource('/dashboard/articles',ArticleController::class);
-Route::resource('/dashboard/tags',TagController::class);
+Route::middleware('auth')->prefix('dashboard')->group(function (){
+    Route::resource('/articles',ArticleController::class);
+Route::resource('/tags',TagController::class);
+    Route::prefix('categories')->name('dashboard.categories.')->group(function(){
 
-Route::get('/frontend/main',[HomePageController::class,'index'])->name('frontend.mainPage');
+        Route::get('/',[CategoryController::class,'index'])->name('index');
+        Route::get('/create',[CategoryController::class,'create'])->name('create');
+        Route::post('/',[CategoryController::class,'store'])->name('store');
+        Route::post('/{category}',[CategoryController::class,'destroy'])->name('destroy');
+        Route::get('/{category}/edit',[CategoryController::class,'edit'])->name('edit');
+        Route::post('/{category}/update',[CategoryController::class,'update'])->name('update');
+    });
+
+});
+
+
+
+
+
+
 Route::get('/frontend/aboutAs',[HomePageController::class,'viewAbout'])->name('frontend.aboutAs');
 
 Route::get('/articles/category/{category}', [HomePageController::class,'showArticlesByCategory'])->
